@@ -61,17 +61,22 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   align-items: center;
   justify-content: space-between;
   height: var(--header-h);
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   color: var(--c-primary);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   letter-spacing: 0.2px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .logo-mark {
@@ -87,8 +92,21 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   flex-shrink: 0;
 }
 
-.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.logo-text small { font-size: 0.7rem; font-weight: 500; color: var(--c-text-muted); }
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.logo-text > span { overflow: hidden; text-overflow: ellipsis; }
+.logo-text small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--c-text-muted);
+  display: none; /* ẩn subtitle ở mobile để dành chỗ cho logo + flag */
+}
 
 /* Mobile nav toggle */
 .nav-toggle {
@@ -97,6 +115,7 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   height: 40px;
   position: relative;
   z-index: 110;
+  flex-shrink: 0;
 }
 .nav-toggle span,
 .nav-toggle span::before,
@@ -145,8 +164,8 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-left: auto;
-  margin-right: 8px;
+  margin-right: 4px;
+  flex-shrink: 0;
 }
 .lang-btn {
   width: 32px;
@@ -462,6 +481,17 @@ section.alt { background: var(--c-bg-alt); }
   font-size: 0.85rem;
   color: rgba(255,255,255,0.6);
 }
+.footer-credit {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+}
+.footer-credit a {
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  border-bottom: 1px dotted rgba(255,255,255,0.3);
+}
+.footer-credit a:hover { color: var(--c-accent); border-bottom-color: var(--c-accent); }
 
 /* ========== Floating contact ========== */
 .float-contact {
@@ -504,6 +534,8 @@ section.alt { background: var(--c-bg-alt); }
   .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
   .section-head h2 { font-size: 2rem; }
   section { padding: 80px 0; }
+  .logo { font-size: 1.05rem; gap: 10px; }
+  .logo-text small { display: block; } /* hiện subtitle khi đủ chỗ */
 }
 
 @media (min-width: 900px) {
