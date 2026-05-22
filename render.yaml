@@ -1,0 +1,35 @@
+# Render Infrastructure as Code — Cơ Khí An Khang
+# Docs: https://render.com/docs/blueprint-spec
+#
+# Static site, no build step. Render serves files trực tiếp từ root.
+# Sau khi push file này lên GitHub, vào Render dashboard:
+#   New → Blueprint → chọn repo cokhiankhang → Apply.
+# Render sẽ tự đọc file này và tạo static site theo cấu hình bên dưới.
+
+services:
+  - type: web
+    name: cokhiankhang
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+
+    # Cache-control: HTML không cache lâu (để dễ update),
+    # ảnh & assets cache 1 tuần (đỡ tốn băng thông Render).
+    headers:
+      - path: /*.html
+        name: Cache-Control
+        value: public, max-age=300, must-revalidate
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=604800
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=604800
+
+      # Security headers cơ bản
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
